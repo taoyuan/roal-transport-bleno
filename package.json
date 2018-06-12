@@ -1,6 +1,6 @@
 {
   "name": "roal-transport-bleno",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "roal-transport-bleno",
   "license": "MIT",
   "repository": "",
@@ -17,7 +17,8 @@
     "clean": "rimraf lib",
     "build": "npm run clean && echo Using TypeScript && tsc --version && tsc --pretty",
     "test": "npm run build && mocha --require ts-node/register --recursive \"test/**/*.test.ts\"",
-    "example": "cd examples && node -r ts-node/register"
+    "example": "cd examples && node -r ts-node/register",
+    "prepublish": "npm run build"
   },
   "dependencies": {},
   "optionalDependencies": {

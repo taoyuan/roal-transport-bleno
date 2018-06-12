@@ -1,0 +1,8 @@
+{
+  "type": "rpc",
+  "id": 0,
+  "name": "echo",
+  "payload": [
+    "Hello World"
+  ]
+}

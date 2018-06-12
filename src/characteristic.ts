@@ -36,11 +36,6 @@ export class RoalCharacteristic extends Characteristic {
     }
   }
 
-  onReadRequest(offset: number, cb: (code: number, data: Buffer) => void) {
-    console.log('READ request');
-    cb(STATUS_SUCCESS, Buffer.allocUnsafe(0));
-  }
-
   onWriteRequest(data: Buffer, offset: number, withoutResponse: boolean, cb: (code: number) => void) {
     try {
       this._transport.read(data);
@@ -71,7 +66,29 @@ export class BlenoTransport extends Transport {
   }
 
   write(data: Buffer) {
-    this.characteristic.notify(data);
+    console.log('ready to send: ' + data.toString());
+
+    const ChunkSize = 16;
+
+    for (let i = 0; i < data.length; i += ChunkSize) {
+      let flags = 0;
+      // mark final message
+      if (i + ChunkSize >= data.length) {
+        flags |= 0x8000;
+      }
+
+      let end = i + ChunkSize;
+      if (end > data.length) {
+        end = data.length;
+      }
+
+      const chunk = data.slice(i, end);
+      const buf = Buffer.allocUnsafe(chunk.length + 2);
+      buf.writeUInt16LE(i | flags, 0);
+      chunk.copy(buf, 2, 0);
+      console.log('sending: ' + chunk.toString());
+      this.characteristic.notify(buf);
+    }
   }
 
   send(message: Message, context?: TransportContext): void {

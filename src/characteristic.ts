@@ -91,7 +91,7 @@ export class BlenoTransport extends Transport {
     }
   }
 
-  send(message: Message, context?: TransportContext): void {
+  async send(message: Message, context?: TransportContext) {
     this.write(Buffer.from(JSON.stringify(message)));
   }
 }

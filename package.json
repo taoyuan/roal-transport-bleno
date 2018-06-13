@@ -23,7 +23,8 @@
   "dependencies": {},
   "optionalDependencies": {
     "bleno": "^0.5.0",
-    "roal": "^0.1.7"
+    "roal": "^0.1.8",
+    "xpc-connection": "github:taoyuan/node-xpc-connection"
   },
   "devDependencies": {
     "@types/chai": "^4.1.3",

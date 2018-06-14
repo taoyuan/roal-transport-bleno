@@ -1,5 +1,6 @@
 import {Characteristic} from "bleno";
 import {Message, RPC, Transport, TransportContext} from "roal";
+import {fragment} from "blue-chunk";
 
 export const STATUS_SUCCESS = Characteristic.RESULT_SUCCESS;
 export const STATUS_INVALID_OFFSET = Characteristic.RESULT_INVALID_OFFSET;
@@ -67,28 +68,7 @@ export class BlenoTransport extends Transport {
 
   write(data: Buffer) {
     console.log('ready to send: ' + data.toString());
-
-    const ChunkSize = 16;
-
-    for (let i = 0; i < data.length; i += ChunkSize) {
-      let flags = 0;
-      // mark final message
-      if (i + ChunkSize >= data.length) {
-        flags |= 0x8000;
-      }
-
-      let end = i + ChunkSize;
-      if (end > data.length) {
-        end = data.length;
-      }
-
-      const chunk = data.slice(i, end);
-      const buf = Buffer.allocUnsafe(chunk.length + 2);
-      buf.writeUInt16LE(i | flags, 0);
-      chunk.copy(buf, 2, 0);
-      console.log('sending: ' + chunk.toString());
-      this.characteristic.notify(buf);
-    }
+    fragment(data, chunk => this.characteristic.notify(chunk));
   }
 
   async send(message: Message, context?: TransportContext) {

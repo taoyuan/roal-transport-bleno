@@ -20,7 +20,9 @@
     "example": "cd examples && node -r ts-node/register",
     "prepublish": "npm run build"
   },
-  "dependencies": {},
+  "dependencies": {
+    "blue-chunk": "^0.1.1"
+  },
   "optionalDependencies": {
     "bleno": "^0.5.0",
     "roal": "^0.1.8",

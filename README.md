@@ -1,6 +1,8 @@
 # roal-transport-bleno
 
-> roal [bleno](github.com/noble/bleno) transport
+> The roal bleno transport for BLE peripheral side
+
+See central side transport [roal-transport-noble](https://github.com/taoyuan/roal-transport-noble)
 
 ## Installation
 

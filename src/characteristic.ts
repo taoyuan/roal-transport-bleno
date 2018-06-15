@@ -1,5 +1,5 @@
 import {Characteristic} from "bleno";
-import {Message, RPC, Transport, TransportContext} from "roal";
+import {RPC, Transport, TransportContext} from "roal";
 import {fragment} from "blue-chunk";
 
 export const STATUS_SUCCESS = Characteristic.RESULT_SUCCESS;
@@ -71,7 +71,7 @@ export class BlenoTransport extends Transport {
     fragment(data, chunk => this.characteristic.notify(chunk));
   }
 
-  async send(message: Message, context?: TransportContext) {
+  async send(message: any, context?: TransportContext) {
     this.write(Buffer.from(JSON.stringify(message)));
   }
 }
